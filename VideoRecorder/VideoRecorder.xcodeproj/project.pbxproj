@@ -22,6 +22,7 @@
 		EF7763E018CF76B70008F29A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF7763BF18CF76B70008F29A /* UIKit.framework */; };
 		EF7763E818CF76B70008F29A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EF7763E618CF76B70008F29A /* InfoPlist.strings */; };
 		EF7763EA18CF76B70008F29A /* VideoRecorderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7763E918CF76B70008F29A /* VideoRecorderTests.m */; };
+		EF7763F518CF7C380008F29A /* VideoRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7763F418CF7C380008F29A /* VideoRecorder.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,8 @@
 		EF7763E518CF76B70008F29A /* VideoRecorderTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "VideoRecorderTests-Info.plist"; sourceTree = "<group>"; };
 		EF7763E718CF76B70008F29A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		EF7763E918CF76B70008F29A /* VideoRecorderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoRecorderTests.m; sourceTree = "<group>"; };
+		EF7763F318CF7C380008F29A /* VideoRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoRecorder.h; sourceTree = "<group>"; };
+		EF7763F418CF7C380008F29A /* VideoRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoRecorder.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +123,8 @@
 				EF7763D018CF76B70008F29A /* Main_iPad.storyboard */,
 				EF7763D318CF76B70008F29A /* ViewController.h */,
 				EF7763D418CF76B70008F29A /* ViewController.m */,
+				EF7763F318CF7C380008F29A /* VideoRecorder.h */,
+				EF7763F418CF7C380008F29A /* VideoRecorder.m */,
 				EF7763D618CF76B70008F29A /* Images.xcassets */,
 				EF7763C218CF76B70008F29A /* Supporting Files */,
 			);
@@ -256,6 +261,7 @@
 				EF7763D518CF76B70008F29A /* ViewController.m in Sources */,
 				EF7763CC18CF76B70008F29A /* AppDelegate.m in Sources */,
 				EF7763C818CF76B70008F29A /* main.m in Sources */,
+				EF7763F518CF7C380008F29A /* VideoRecorder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -392,6 +398,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VideoRecorder/VideoRecorder-Prefix.pch";
 				INFOPLIST_FILE = "VideoRecorder/VideoRecorder-Info.plist";
@@ -405,6 +412,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VideoRecorder/VideoRecorder-Prefix.pch";
 				INFOPLIST_FILE = "VideoRecorder/VideoRecorder-Info.plist";
