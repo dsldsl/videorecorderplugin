@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>24DBCDE5-2DA3-4497-9C14-F4CADEB21875</string>
+	<key>IDESourceControlProjectName</key>
+	<string>VideoRecorder</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>417BFE3D-CA8F-4983-8878-45D8BC8549FE</key>
+		<string>https://github.com/dsldsl/videorecorderplugin.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>VideoRecorder/VideoRecorder.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>417BFE3D-CA8F-4983-8878-45D8BC8549FE</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/dsldsl/videorecorderplugin.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>417BFE3D-CA8F-4983-8878-45D8BC8549FE</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>417BFE3D-CA8F-4983-8878-45D8BC8549FE</string>
+			<key>IDESourceControlWCCName</key>
+			<string>videorecorderplugin</string>
+		</dict>
+	</array>
+</dict>
+</plist>
