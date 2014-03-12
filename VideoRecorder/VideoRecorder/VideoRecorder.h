@@ -17,4 +17,7 @@
 @property (strong, nonatomic) AVCaptureDeviceInput *videoInput;
 @property (strong, nonatomic) AVCaptureDeviceInput *audioInput;
 @property (strong, nonatomic) AVCaptureMovieFileOutput *movieOutput;
+
+-(void)startRecording;
+-(void)stopRecording;
 @end

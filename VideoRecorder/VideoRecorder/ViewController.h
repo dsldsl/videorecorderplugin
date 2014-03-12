@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+@class VideoRecorder;
 
 @interface ViewController : UIViewController
+
+@property(nonatomic) VideoRecorder *videoRecorder;
+- (IBAction)startBtn:(id)sender;
+- (IBAction)stopBtn:(id)sender;
 
 @end

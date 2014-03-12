@@ -15,7 +15,7 @@
         self.captureSession = [[AVCaptureSession alloc] init];
         
         //initialize capture device
-        AVCaptureDevice *videoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+        AVCaptureDevice *videoDevice = [self frontCamera];
         AVCaptureDevice *audioDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeAudio];
         
         //define inputs
@@ -64,6 +64,17 @@
     }
     return outputURL;
 }
+
+- (AVCaptureDevice *)frontCamera {
+    NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
+    for (AVCaptureDevice *device in devices) {
+        if ([device position] == AVCaptureDevicePositionFront) {
+            return device;
+        }
+    }
+    return nil;
+}
+
 
 -(void)captureOutput:(AVCaptureFileOutput *)captureOutput didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL fromConnections:(NSArray *)connections error:(NSError *)error{
     BOOL recordedSuccessfully = YES;

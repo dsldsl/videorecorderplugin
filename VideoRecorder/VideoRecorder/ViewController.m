@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "VideoRecorder.h"
 
 @interface ViewController ()
 
@@ -14,16 +15,24 @@
 
 @implementation ViewController
 
+@synthesize videoRecorder = _videoRecorder;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    _videoRecorder = [[VideoRecorder alloc]init];
+    
+    
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
+- (IBAction)startBtn:(id)sender {
+    [_videoRecorder startRecording];
 }
 
+- (IBAction)stopBtn:(id)sender {
+    [_videoRecorder stopRecording];
+}
 @end
