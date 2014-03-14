@@ -19,7 +19,7 @@
   <!-- ios -->
   <platform name="ios">
     <config-file target="config.xml" parent="/*/plugins">
-      <plugin name="Echo" value="Echo" onload="true" />
+      <plugin name="VideoRecorder" value="VideoRecorder" onload="true" />
     </config-file>
 
     <config-file target="config.xml" parent="/widget">
