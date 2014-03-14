@@ -10,6 +10,8 @@
 
 @implementation VideoRecorder
 
+CDVInvokedUrlCommand *command;
+
 -(id)init{
     if (self = [super init]) {
         self.captureSession = [[AVCaptureSession alloc] init];
@@ -100,6 +102,9 @@
         if ([fileManager fileExistsAtPath:videopath] == NO) {
             [fileManager copyItemAtPath:outputFileURL.relativePath toPath:videopath error:&error];
         }
+        
+        CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:videopath];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     }
 }
 
@@ -118,18 +123,10 @@
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
-- (void)stopRecording:(CDVInvokedUrlCommand*)command
+- (void)stopRecording:(CDVInvokedUrlCommand*)cmd
 {
-    CDVPluginResult* pluginResult = nil;
-    // NSString* echo = [command.arguments objectAtIndex:0];
-
-    if (echo != nil && [echo length] > 0) {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:echo];
-    } else {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
-    }
-
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    command = cmd;
+    [self stopRecording];
 }
 
 @end
