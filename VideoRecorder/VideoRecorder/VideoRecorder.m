@@ -86,36 +86,26 @@
         NSLog(@"A problem occurred while recording: %@", error);
     }
     if (recordedSuccessfully) {
-        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSError *error;
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsDirectory = [paths objectAtIndex:0];
         
-        [library writeVideoAtPathToSavedPhotosAlbum:outputFileURL
-                                    completionBlock:^(NSURL *assetURL, NSError *error)
-         {
-             UIAlertView *alert;
-             if (!error)
-             {
-                 alert = [[UIAlertView alloc] initWithTitle:@"Video Saved"
-                                                    message:@"The movie was successfully saved to you photos library"
-                                                   delegate:nil
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil, nil];
-             }
-             else
-             {
-                 alert = [[UIAlertView alloc] initWithTitle:@"Error Saving Video"
-                                                    message:@"The movie was not saved to you photos library"
-                                                   delegate:nil
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil, nil];
-             }
-             
-             [alert show];
-         }
-         ];
+        NSTimeInterval timeStamp = [[NSDate date] timeIntervalSince1970];
+        NSNumber *timeStampObj = [NSNumber numberWithDouble: timeStamp];
+        
+        NSString *fileName = [NSString stringWithFormat:@"Video%@.mov",timeStampObj];
+        NSString *videopath = [documentsDirectory stringByAppendingPathComponent:fileName];
+        
+        if ([fileManager fileExistsAtPath:videopath] == NO) {
+            [fileManager copyItemAtPath:outputFileURL.relativePath toPath:videopath error:&error];
+        }
     }
 }
+
 
 -(void)dealloc{
      [self.captureSession stopRunning];
 }
+
 @end
