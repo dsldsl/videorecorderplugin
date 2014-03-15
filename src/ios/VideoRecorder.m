@@ -49,7 +49,10 @@
 
 -(void)stopRecording{
     dispatch_async( dispatch_get_main_queue(), ^{
-        [[[UIAlertView alloc] initWithTitle:@"Srop" message:[NSString stringWithFormat:@"%@ %@",self.movieOutput,_command] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil] show];
+        if (self.movieOutput.isRecording)
+            [[[UIAlertView alloc] initWithTitle:@"Is Recording" message:[NSString stringWithFormat:@"%@ %@",self.movieOutput,_command] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil] show];
+        else
+            [[[UIAlertView alloc] initWithTitle:@"Srop" message:[NSString stringWithFormat:@"%@ %@",self.movieOutput,_command] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil] show];
     });
     [self.movieOutput stopRecording];
 }
