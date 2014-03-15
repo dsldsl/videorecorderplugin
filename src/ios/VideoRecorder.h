@@ -11,7 +11,9 @@
 #import <Cordova/CDV.h>
 
 
-@interface VideoRecorder : CDVPlugin<AVCaptureFileOutputRecordingDelegate>
+@interface VideoRecorder : CDVPlugin<AVCaptureFileOutputRecordingDelegate>{
+    CDVInvokedUrlCommand *_command;
+}
 
 @property (strong, nonatomic) AVCaptureSession *captureSession;
 @property (strong, nonatomic) AVCaptureDeviceInput *videoInput;

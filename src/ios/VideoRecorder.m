@@ -10,7 +10,6 @@
 
 @implementation VideoRecorder
 
-CDVInvokedUrlCommand *command;
 
 -(void)pluginInitialize{
     NSLog(@"VideoRecorder INIT");
@@ -49,6 +48,9 @@ CDVInvokedUrlCommand *command;
 }
 
 -(void)stopRecording{
+    dispatch_async( dispatch_get_main_queue(), ^{
+        [[[UIAlertView alloc] initWithTitle:@"Srop" message:[NSString stringWithFormat:@"%@",_command] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil] show];
+    });
     [self.movieOutput stopRecording];
 }
 
@@ -80,7 +82,7 @@ CDVInvokedUrlCommand *command;
     if ([error code] != noErr)
     {
         dispatch_async( dispatch_get_main_queue(), ^{
-            [[[UIAlertView alloc] initWithTitle:@"error" message:[NSString stringWithFormat:@"%@",command] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil] show];
+            [[[UIAlertView alloc] initWithTitle:@"error" message:[NSString stringWithFormat:@"%@",_command] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil] show];
         });
         id value = [[error userInfo] objectForKey:AVErrorRecordingSuccessfullyFinishedKey];
         if (value)
@@ -102,11 +104,12 @@ CDVInvokedUrlCommand *command;
         if ([fileManager fileExistsAtPath:videopath] == NO) {
             [fileManager copyItemAtPath:outputFileURL.relativePath toPath:videopath error:&error];
         }
-       dispatch_async( dispatch_get_main_queue(), ^{
-            [[[UIAlertView alloc] initWithTitle:@"second" message:[NSString stringWithFormat:@"%@",command] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil] show];
+        dispatch_async( dispatch_get_main_queue(), ^{
+            [[[UIAlertView alloc] initWithTitle:@"second" message:[NSString stringWithFormat:@"%@",_command] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil] show];
         });
         CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:videopath];
-        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+        [pluginResult setKeepCallbackAsBool:NO];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:_command.callbackId];
     }
 }
 
@@ -117,11 +120,11 @@ CDVInvokedUrlCommand *command;
 }
 
 
-//Cordova 
+//Cordova
 
 - (void)startRecording:(CDVInvokedUrlCommand*)command
 {
-   
+    
     [self.commandDelegate runInBackground:^{
         CDVPluginResult* pluginResult = nil;
         
@@ -134,13 +137,16 @@ CDVInvokedUrlCommand *command;
 
 - (void)stopRecording:(CDVInvokedUrlCommand*)cmd
 {
-    command = cmd;
-    [[[UIAlertView alloc] initWithTitle:@"sd" message:[NSString stringWithFormat:@"%@",command] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil] show];
+    _command = cmd;
+    [[[UIAlertView alloc] initWithTitle:@"sd" message:[NSString stringWithFormat:@"%@",_command] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil] show];
     [self.commandDelegate runInBackground:^{
-        command = cmd;
-        
+        _command = cmd;
+        CDVPluginResult *pluginResult =  [CDVPluginResult resultWithStatus:CDVCommandStatus_NO_RESULT messageAsString:@""];
+        [pluginResult setKeepCallbackAsBool:YES];
         [self stopRecording];
-     }];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:_command.callbackId];
+        
+    }];
 }
 
 @end
