@@ -49,7 +49,7 @@
 
 -(void)stopRecording{
     dispatch_async( dispatch_get_main_queue(), ^{
-        [[[UIAlertView alloc] initWithTitle:@"Srop" message:[NSString stringWithFormat:@"%@",_command] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil] show];
+        [[[UIAlertView alloc] initWithTitle:@"Srop" message:[NSString stringWithFormat:@"%@ %@",self.movieOutput,_command] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil] show];
     });
     [self.movieOutput stopRecording];
 }
@@ -79,11 +79,12 @@
 
 -(void)captureOutput:(AVCaptureFileOutput *)captureOutput didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL fromConnections:(NSArray *)connections error:(NSError *)error{
     BOOL recordedSuccessfully = YES;
+    dispatch_async( dispatch_get_main_queue(), ^{
+        [[[UIAlertView alloc] initWithTitle:@"Capture" message:[NSString stringWithFormat:@"%@",_command] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil] show];
+    });
     if ([error code] != noErr)
     {
-        dispatch_async( dispatch_get_main_queue(), ^{
-            [[[UIAlertView alloc] initWithTitle:@"error" message:[NSString stringWithFormat:@"%@",_command] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil] show];
-        });
+        
         id value = [[error userInfo] objectForKey:AVErrorRecordingSuccessfullyFinishedKey];
         if (value)
             recordedSuccessfully = [value boolValue];
@@ -137,8 +138,6 @@
 
 - (void)stopRecording:(CDVInvokedUrlCommand*)cmd
 {
-    _command = cmd;
-    [[[UIAlertView alloc] initWithTitle:@"sd" message:[NSString stringWithFormat:@"%@",_command] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil] show];
     [self.commandDelegate runInBackground:^{
         _command = cmd;
         CDVPluginResult *pluginResult =  [CDVPluginResult resultWithStatus:CDVCommandStatus_NO_RESULT messageAsString:@""];
