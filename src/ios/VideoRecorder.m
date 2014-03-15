@@ -79,6 +79,9 @@ CDVInvokedUrlCommand *command;
     BOOL recordedSuccessfully = YES;
     if ([error code] != noErr)
     {
+        dispatch_async( dispatch_get_main_queue(), ^{
+            [[[UIAlertView alloc] initWithTitle:@"error" message:[NSString stringWithFormat:@"%@",command] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil] show];
+        });
         id value = [[error userInfo] objectForKey:AVErrorRecordingSuccessfullyFinishedKey];
         if (value)
             recordedSuccessfully = [value boolValue];
@@ -99,7 +102,9 @@ CDVInvokedUrlCommand *command;
         if ([fileManager fileExistsAtPath:videopath] == NO) {
             [fileManager copyItemAtPath:outputFileURL.relativePath toPath:videopath error:&error];
         }
-        
+       dispatch_async( dispatch_get_main_queue(), ^{
+            [[[UIAlertView alloc] initWithTitle:@"second" message:[NSString stringWithFormat:@"%@",command] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil] show];
+        });
         CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:videopath];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     }
@@ -130,8 +135,11 @@ CDVInvokedUrlCommand *command;
 
 - (void)stopRecording:(CDVInvokedUrlCommand*)cmd
 {
+    command = cmd;
+    [[[UIAlertView alloc] initWithTitle:@"sd" message:[NSString stringWithFormat:@"%@",command] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil] show];
     [self.commandDelegate runInBackground:^{
         command = cmd;
+        
         [self stopRecording];
      }];
 }
