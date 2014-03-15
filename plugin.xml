@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
-    id="com.appgyver.plugin.Echo"
+    id="com.nilaf.plugin.VideoRecorder"
     version="1.0.0">
 
     <name>VideoRecorder</name>
@@ -9,8 +9,6 @@
     Video recorder Plugin for Steroids.js
   </description>
 
-  <asset src="www/EchoPlugin.js" target="plugins/EchoPlugin.js" />
-
   <engines>
     <engine name="cordova" version=">=2.7.0" />
   </engines>
@@ -18,11 +16,8 @@
 
   <!-- ios -->
   <platform name="ios">
-    <config-file target="config.xml" parent="/*/plugins">
-      <plugin name="VideoRecorder" value="VideoRecorder" onload="true" />
-    </config-file>
 
-    <config-file target="config.xml" parent="/widget">
+    <config-file target="config.xml" parent="/*">
       <feature name="VideoRecorder">
         <param name="ios-package" value="VideoRecorder"/>
         <param name="onload" value="true" />
