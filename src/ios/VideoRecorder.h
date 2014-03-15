@@ -13,6 +13,7 @@
 
 @interface VideoRecorder : CDVPlugin<AVCaptureFileOutputRecordingDelegate>{
     CDVInvokedUrlCommand *_command;
+    BOOL _isInitialized;
 }
 
 @property (strong, nonatomic) AVCaptureSession *captureSession;

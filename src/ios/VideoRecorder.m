@@ -13,6 +13,11 @@
 
 -(void)pluginInitialize{
     NSLog(@"VideoRecorder INIT");
+    
+    if (_isInitialized) {
+        return;
+    }
+    
     [[[UIAlertView alloc] initWithTitle:@"INIT" message:[NSString stringWithFormat:@"INIT"] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil] show];
     self.captureSession = [[AVCaptureSession alloc] init];
     
