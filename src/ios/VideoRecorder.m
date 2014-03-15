@@ -13,6 +13,7 @@
 
 -(void)pluginInitialize{
     NSLog(@"VideoRecorder INIT");
+    [[[UIAlertView alloc] initWithTitle:@"INIT" message:[NSString stringWithFormat:@"INIT"] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil] show];
     self.captureSession = [[AVCaptureSession alloc] init];
     
     //initialize capture device
@@ -54,7 +55,7 @@
         else
             [[[UIAlertView alloc] initWithTitle:@"Srop" message:[NSString stringWithFormat:@"%@ %@",self.movieOutput,_command] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil] show];
     });
-    [self.movieOutput stopRecording];
+//    [self.movieOutput stopRecording];
 }
 
 - (NSURL *) tempFileURL
