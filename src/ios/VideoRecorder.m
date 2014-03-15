@@ -12,39 +12,36 @@
 
 CDVInvokedUrlCommand *command;
 
--(id)init{
-    if (self = [super init]) {
-        self.captureSession = [[AVCaptureSession alloc] init];
-        
-        //initialize capture device
-        AVCaptureDevice *videoDevice = [self frontCamera];
-        AVCaptureDevice *audioDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeAudio];
-        
-        //define inputs
-        self.videoInput = [AVCaptureDeviceInput deviceInputWithDevice:videoDevice error:nil];
-        self.audioInput = [[AVCaptureDeviceInput alloc] initWithDevice:audioDevice error:nil];
-        
-        //define output
-        self.movieOutput = [[AVCaptureMovieFileOutput alloc] init];
-        
-        //Add inputs and output to capturesession
-        [self.captureSession addInput:self.videoInput];
-        [self.captureSession addInput:self.audioInput];
-        [self.captureSession addOutput:self.movieOutput];
-        
-        
-        
-        // Handle video orientation
-        NSArray *array = [[self.captureSession.outputs objectAtIndex:0] connections];
-        for (AVCaptureConnection *connection in array)
-        {
-            connection.videoOrientation = AVCaptureVideoOrientationPortrait;
-        }
-        
-        [self.captureSession startRunning];
+-(void)pluginInitialize{
+    NSLog(@"VideoRecorder INIT");
+    self.captureSession = [[AVCaptureSession alloc] init];
+    
+    //initialize capture device
+    AVCaptureDevice *videoDevice = [self frontCamera];
+    AVCaptureDevice *audioDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeAudio];
+    
+    //define inputs
+    self.videoInput = [AVCaptureDeviceInput deviceInputWithDevice:videoDevice error:nil];
+    self.audioInput = [[AVCaptureDeviceInput alloc] initWithDevice:audioDevice error:nil];
+    
+    //define output
+    self.movieOutput = [[AVCaptureMovieFileOutput alloc] init];
+    
+    //Add inputs and output to capturesession
+    [self.captureSession addInput:self.videoInput];
+    [self.captureSession addInput:self.audioInput];
+    [self.captureSession addOutput:self.movieOutput];
+    
+    
+    
+    // Handle video orientation
+    NSArray *array = [[self.captureSession.outputs objectAtIndex:0] connections];
+    for (AVCaptureConnection *connection in array)
+    {
+        connection.videoOrientation = AVCaptureVideoOrientationPortrait;
     }
     
-    return self;
+    [self.captureSession startRunning];
 }
 
 -(void)startRecording{
@@ -110,7 +107,8 @@ CDVInvokedUrlCommand *command;
 
 
 -(void)dealloc{
-     [self.captureSession stopRunning];
+    NSLog(@"VideoRecorder Dealloc");
+    [self.captureSession stopRunning];
 }
 
 
@@ -118,15 +116,24 @@ CDVInvokedUrlCommand *command;
 
 - (void)startRecording:(CDVInvokedUrlCommand*)command
 {
-    CDVPluginResult* pluginResult = nil;
-    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"hello"];
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+   
+    [self.commandDelegate runInBackground:^{
+        CDVPluginResult* pluginResult = nil;
+        
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"hello"];
+        [pluginResult setKeepCallbackAsBool:YES];
+        [self startRecording];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    }];
+    
 }
 
 - (void)stopRecording:(CDVInvokedUrlCommand*)cmd
 {
-    command = cmd;
-    [self stopRecording];
+    [self.commandDelegate runInBackground:^{
+        command = cmd;
+        [self stopRecording];
+     }];
 }
 
 @end
