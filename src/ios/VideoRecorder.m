@@ -126,7 +126,6 @@ CDVInvokedUrlCommand *command;
         CDVPluginResult* pluginResult = nil;
         
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"hello"];
-        [pluginResult setKeepCallbackAsBool:YES];
         [self startRecording];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     }];
