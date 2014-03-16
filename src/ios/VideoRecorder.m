@@ -12,11 +12,14 @@
 
 
 -(void)pluginInitialize{
-    NSLog(@"VideoRecorder INIT");
+   
     
     if (_isInitialized) {
         return;
     }
+    _isInitialized = YES;
+    
+     NSLog(@"VideoRecorder INIT");
     
     [[[UIAlertView alloc] initWithTitle:@"INIT" message:[NSString stringWithFormat:@"INIT"] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil] show];
     self.captureSession = [[AVCaptureSession alloc] init];
@@ -46,21 +49,21 @@
         connection.videoOrientation = AVCaptureVideoOrientationPortrait;
     }
     
-    [self.captureSession startRunning];
 }
 
 -(void)startRecording{
+    [self.captureSession startRunning];
     [self.movieOutput startRecordingToOutputFileURL:[self tempFileURL] recordingDelegate:self];
 }
 
 -(void)stopRecording{
     dispatch_async( dispatch_get_main_queue(), ^{
-        if (self.movieOutput.isRecording)
+
             [[[UIAlertView alloc] initWithTitle:@"Is Recording" message:[NSString stringWithFormat:@"%@ %@",self.movieOutput,_command] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil] show];
-        else
-            [[[UIAlertView alloc] initWithTitle:@"Srop" message:[NSString stringWithFormat:@"%@ %@",self.movieOutput,_command] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil] show];
+        
     });
-//    [self.movieOutput stopRecording];
+    [self.movieOutput stopRecording];
+    [self.captureSession stopRunning];
 }
 
 - (NSURL *) tempFileURL
@@ -126,7 +129,6 @@
 
 -(void)dealloc{
     NSLog(@"VideoRecorder Dealloc");
-    [self.captureSession stopRunning];
 }
 
 
@@ -149,7 +151,7 @@
 {
     [self.commandDelegate runInBackground:^{
         _command = cmd;
-        CDVPluginResult *pluginResult =  [CDVPluginResult resultWithStatus:CDVCommandStatus_NO_RESULT messageAsString:@""];
+        CDVPluginResult *pluginResult =  [CDVPluginResult resultWithStatus:CDVCommandStatus_NO_RESULT];
         [pluginResult setKeepCallbackAsBool:YES];
         [self stopRecording];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:_command.callbackId];
