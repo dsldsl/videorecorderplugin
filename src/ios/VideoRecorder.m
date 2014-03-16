@@ -11,7 +11,7 @@
 @implementation VideoRecorder
 
 
--(void)pluginInitialize{
+-(void)cameraInitialize{
    
     
     if (_isInitialized) {
@@ -21,7 +21,6 @@
     
      NSLog(@"VideoRecorder INIT");
     
-    [[[UIAlertView alloc] initWithTitle:@"INIT" message:[NSString stringWithFormat:@"INIT"] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil] show];
     self.captureSession = [[AVCaptureSession alloc] init];
     
     //initialize capture device
@@ -52,16 +51,12 @@
 }
 
 -(void)startRecording{
+    [self cameraInitialize];
     [self.captureSession startRunning];
     [self.movieOutput startRecordingToOutputFileURL:[self tempFileURL] recordingDelegate:self];
 }
 
 -(void)stopRecording{
-    dispatch_async( dispatch_get_main_queue(), ^{
-
-            [[[UIAlertView alloc] initWithTitle:@"Is Recording" message:[NSString stringWithFormat:@"%@ %@",self.movieOutput,_command] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil] show];
-        
-    });
     [self.movieOutput stopRecording];
     [self.captureSession stopRunning];
 }
@@ -91,9 +86,7 @@
 
 -(void)captureOutput:(AVCaptureFileOutput *)captureOutput didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL fromConnections:(NSArray *)connections error:(NSError *)error{
     BOOL recordedSuccessfully = YES;
-    dispatch_async( dispatch_get_main_queue(), ^{
-        [[[UIAlertView alloc] initWithTitle:@"Capture" message:[NSString stringWithFormat:@"%@",_command] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil] show];
-    });
+   
     if ([error code] != noErr)
     {
         
@@ -117,9 +110,7 @@
         if ([fileManager fileExistsAtPath:videopath] == NO) {
             [fileManager copyItemAtPath:outputFileURL.relativePath toPath:videopath error:&error];
         }
-        dispatch_async( dispatch_get_main_queue(), ^{
-            [[[UIAlertView alloc] initWithTitle:@"second" message:[NSString stringWithFormat:@"%@",_command] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil] show];
-        });
+       
         CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:videopath];
         [pluginResult setKeepCallbackAsBool:NO];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:_command.callbackId];
