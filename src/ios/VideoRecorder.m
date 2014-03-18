@@ -109,6 +109,7 @@
         
         if ([fileManager fileExistsAtPath:videopath] == NO) {
             [fileManager copyItemAtPath:outputFileURL.relativePath toPath:videopath error:&error];
+            [[[UIAlertView alloc] initWithTitle:@"hello" message:[NSString stringWithFormat:@"Error:%@",error.domain] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil] show];
         }
        
         CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:videopath];
