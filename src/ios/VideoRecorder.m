@@ -47,18 +47,16 @@
     {
         connection.videoOrientation = AVCaptureVideoOrientationPortrait;
     }
+    [self.captureSession startRunning];
     
 }
 
 -(void)startRecording{
-    [self cameraInitialize];
-    [self.captureSession startRunning];
     [self.movieOutput startRecordingToOutputFileURL:[self tempFileURL] recordingDelegate:self];
 }
 
 -(void)stopRecording{
     [self.movieOutput stopRecording];
-    [self.captureSession stopRunning];
 }
 
 - (NSURL *) tempFileURL
@@ -109,7 +107,6 @@
         
         if ([fileManager fileExistsAtPath:videopath] == NO) {
             [fileManager copyItemAtPath:outputFileURL.relativePath toPath:videopath error:&error];
-            [[[UIAlertView alloc] initWithTitle:@"hello" message:[NSString stringWithFormat:@"Error:%@",error.domain] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil] show];
         }
        
         CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:videopath];
@@ -121,11 +118,23 @@
 
 -(void)dealloc{
     NSLog(@"VideoRecorder Dealloc");
+    [self.captureSession stopRunning];
 }
 
 
 //Cordova
 
+- (void)initRecording:(CDVInvokedUrlCommand*)command
+{
+    [self.commandDelegate runInBackground:^{
+        CDVPluginResult* pluginResult = nil;
+        
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+        [self cameraInitialize];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    }];
+    
+}
 - (void)startRecording:(CDVInvokedUrlCommand*)command
 {
     
@@ -150,5 +159,6 @@
         
     }];
 }
+
 
 @end
